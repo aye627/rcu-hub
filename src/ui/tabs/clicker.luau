@@ -27,10 +27,7 @@ return function(Window)
             task.wait(1/60)
         end
     end)
-
-    Window:OnDestroy(function()
-        if loop then task.cancel(loop) end
-    end)
+    table.insert(Window._threads, loop)
 
     return Tab
 end

@@ -88,10 +88,8 @@ return function(Window)
         end
     end)
 
-    Window:OnDestroy(function()
-        if connection then connection:Disconnect() end
-        if loop then task.cancel(loop) end
-    end)
+    table.insert(Window._threads, loop)
+    table.insert(Window._connections, connection)
 
     return Tab
 end

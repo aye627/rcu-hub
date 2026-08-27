@@ -52,7 +52,7 @@ local function update()
     Config.debugStats = DebugService.getDebugStats()
         
     local link = Config.debugStats
-    for name, object in paragraphs do
+    for name, object in Paragraphs do
         local value = link[name]
         local handler = handlers[name]
         local result = if handler then handler(value) else value
@@ -67,8 +67,8 @@ return function(Window)
         Icon = "chart-column"
     })
 
-    for name, config in paragraphs do
-        local ref = paragraphs[name]
+    for name, config in Paragraphs do
+        local ref = Paragraphs[name]
         ref.Desc = ref._handler(debugStats[name])
         handlers[name] = ref._handler
         paragraphs[name] = Tab:Paragraph(config)

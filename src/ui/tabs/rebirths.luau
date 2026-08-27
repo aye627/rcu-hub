@@ -23,8 +23,8 @@ local function refreshRebirthOptions()
     local unlocked = RebirthService.unlockedRebirthButtons(DataService.getData())
     for index, value in ipairs(unlocked) do
         local formatted = Functions.suffixes(value)
-        state.buttons[index] = formatted
-        state.nameToIndexMap[formatted] = index
+        state.buttons[index] = tostring(formatted)
+        state.nameToIndexMap[tostring(formatted)] = index
     end
 end
 

@@ -3,14 +3,28 @@ local ClickerService = require("../../backend/services/click")
 -- See `Tab` at "https://footagesus.github.io/WindUI-Docs/docs/tab"
 return function(Window)
     local fastAutoClicker = false
+    local delay = 1/60
 
     local Tab = Window:Tab({
         Title = "Clicker",
         Icon = "mouse-pointer-click"
     })
 
+    local ClickDelay = Tab:Slider({
+        Title = "Click Delay",
+        Value = {
+            Min = 0,
+            Max = 1,
+            Default = delay
+        },
+        Step = 1/100,
+        Callback = function(value)
+            delay = value
+        end
+    })
+
     Tab:Toggle({
-        Title = "Fast Auto Clicker",
+        Title = "Auto Clicker",
         Desc = "Enable Auto Clicker",
         Icon = "mouse-pointer-click",
         Flag = "fastAutoClicker",
@@ -24,7 +38,7 @@ return function(Window)
             if fastAutoClicker then
                 ClickerService.click()
             end
-            task.wait(1/60)
+            task.wait(delay)
         end
     end)
     table.insert(Window._threads, loop)

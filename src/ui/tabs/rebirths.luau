@@ -83,7 +83,7 @@ return function(Window)
 
     local loop = task.spawn(function()
         while true do
-            task.wait(0.5)
+            RunService.RenderStepped:Wait()
             attemptRebirth()
         end
     end)

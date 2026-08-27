@@ -25,6 +25,7 @@ local function refreshRebirthOptions()
         local formatted = Functions.suffixes(value)
         state.buttons[index] = tostring(formatted)
         state.nameToIndexMap[tostring(formatted)] = index
+        task.wait(1/90) -- prevent lags
     end
 end
 

@@ -29,7 +29,7 @@ return function(Window)
     end)
 
     Window:OnDestroy(function()
-        if loop then task.cancel(loop)
+        if loop then task.cancel(loop) end
     end)
 
     return Tab

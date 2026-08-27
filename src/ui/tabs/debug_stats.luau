@@ -86,7 +86,7 @@ return function(Window)
         local ref = Paragraphs[name]
         ref.Desc = ref._handler(Config.debugStats[name])
         handlers[name] = ref._handler
-        paragraphs[name] = Tab:Paragraph(config)
+        Paragraphs[name] = Tab:Paragraph(config)
     end
     
     local loop = task.spawn(function()

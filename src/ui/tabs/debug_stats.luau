@@ -83,9 +83,9 @@ return function(Window)
     })
 
     for name, config in Paragraphs do
+        local ref = Paragraphs[name]
         local handler = ref._handler
         local value = Config.debugStats[name]
-        local ref = Paragraphs[name]
 
         ref.Desc = if handler then handler(value) else value
         handlers[name] = handler

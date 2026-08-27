@@ -2,7 +2,7 @@
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local RunService = game:GetService("RunService")
 local RebirthService = require("../../backend/services/rebirths")
-local ClickerService = require("../../backend/services/clicks")
+local ClickerService = require("../../backend/services/click")
 local DataService = require("../../backend/services/data")
 local Functions = require(ReplicatedStorage.Shared.Functions)
 

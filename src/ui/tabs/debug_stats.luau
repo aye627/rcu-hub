@@ -105,8 +105,8 @@ return function(Window)
         while true do
             if Config.enabled then
                 update()
-                task.wait(Config.updateDelay)
             end
+            task.wait(Config.updateDelay)
         end
     end)
         

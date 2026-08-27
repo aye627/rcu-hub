@@ -14,9 +14,9 @@ local LocalPlayer = Players.LocalPlayer
 type DebugStats = {
     device_category: string,
     platform: Enum.Platform,
-    fullscreen: boolean,
-    mouse_sensitivity: number,
-    quality_level: Enum.SavedQualitySetting,
+    fullscreen: boolean?,
+    mouse_sensitivity: number?,
+    quality_level: Enum.SavedQualitySetting?,
     memory_usage: number
 }
 

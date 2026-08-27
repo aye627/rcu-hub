@@ -32,7 +32,7 @@ local function getDeviceCategory()
 end
 
 function Service.getDebugStats(): DebugStats
-    local success, platform = pcall(function() return UserInputService:GetPlatform())
+    local success, platform = pcall(function() return UserInputService:GetPlatform() end)
     
     return {
         device_category = getDeviceCategory(),

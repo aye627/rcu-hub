@@ -1,12 +1,3 @@
-type DebugStats = {
-    device_category: string,
-    platform: string,
-    fullscreen: boolean,
-    mouse_sensitivity: number,
-    quality_level: Enum.SavedQualitySetting,
-    memory_usage: number
-}
-
 --// Services & Packages
 local DebugService = require("../../backend/services/debug")
 
@@ -29,7 +20,7 @@ local Paragraphs = {
     mouse_sensitivity = {
         Icon = "mouse",
         Title = "Mouse Sensitivity",
-        _handler = function(v: number) return round_decimal(v, 2)
+        _handler = function(v: number) return round_decimal(v, 2) end
     },
     quality_level = {
         Icon = "file-image",
@@ -62,7 +53,11 @@ local function update()
         
     local link = Config.debugStats
     for name, object in paragraphs do
-        object:SetDesc(handlers[name](link[name]))
+        local value = link[name]
+        local handler = handlers[name]
+        local result = if handler then handler(value) else value
+
+        object:SetDesc(result)
     end
 end
     

@@ -10,6 +10,7 @@ Window._connections = {} -- same purpose
 
 local Clicker = require("./tabs/clicker.luau")(Window)
 local Rebirths = require("./tabs/rebirths.luau")(Window)
+local Debug = require("./tabs/debug_stats.luau")(Window)
 
 Window:OnDestroy(function()
     for i, thread_obj in ipairs(Window._threads) do

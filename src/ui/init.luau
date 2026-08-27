@@ -27,5 +27,5 @@ Window:OnDestroy(function()
     Window = nil
     WindUI = nil
 
-    if collectgarbage then collectgarbage("collect") end
+    --if collectgarbage then collectgarbage("collect") end
 end)

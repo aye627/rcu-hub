@@ -12,7 +12,7 @@ local Paragraphs = {
         Title = "Platform",
         _handler = function(v: Enum.Platform) return v.Name end
     },
-    fullscreen = {
+    --[[fullscreen = {
         Icon = "expand",
         Title = "In Fullscreen?",
         _handler = function(v: boolean) return tostring(v) end
@@ -26,7 +26,7 @@ local Paragraphs = {
         Icon = "file-image",
         Title = "Graphic Quality Level",
         _handler = function(v: Enum.SavedQualitySetting) return v.Name end
-    },
+    },]]
     memory_usage = {
         Icon = "database",
         Title = "Memory Usage (RAM)",

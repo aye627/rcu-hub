@@ -95,7 +95,7 @@ return function(Window)
     local loop = task.spawn(function()
         while true do
             update()
-            task.wait(updateDelay)
+            task.wait(Config.updateDelay)
         end
     end)
         

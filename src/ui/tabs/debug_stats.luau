@@ -4,31 +4,31 @@ local DebugService = require("../../backend/services/debug")
 --// Module internals
 local Paragraphs = {
     device_category = {
-        Icon = "monitor-smartphone",
+        Image = "monitor-smartphone",
         Title = "Device Category"
     },
     platform = {
-        Icon = "gamepad",
+        Image = "gamepad",
         Title = "Platform",
         _handler = function(v: Enum.Platform) return v.Name end
     },
     --[[fullscreen = {
-        Icon = "expand",
+        Image = "expand",
         Title = "In Fullscreen?",
         _handler = function(v: boolean) return tostring(v) end
     },
     mouse_sensitivity = {
-        Icon = "mouse",
+        Image = "mouse",
         Title = "Mouse Sensitivity",
         _handler = function(v: number) return round_decimal(v, 2) end
     },
     quality_level = {
-        Icon = "file-image",
+        Image = "file-image",
         Title = "Graphic Quality Level",
         _handler = function(v: Enum.SavedQualitySetting) return v.Name end
     },]]
     memory_usage = {
-        Icon = "database",
+        Image = "database",
         Title = "Memory Usage (RAM)",
         _handler = function(v: number) return math.round(v) end
     }

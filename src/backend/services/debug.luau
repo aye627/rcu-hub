@@ -16,7 +16,7 @@ type DebugStats = {
     platform: string,
     fullscreen: boolean,
     mouse_sensitivity: number,
-    quality_level: Enum.QualityLevel,
+    quality_level: Enum.SavedQualitySetting,
     memory_usage: number
 }
 

@@ -1,30 +1,49 @@
-local RebirthService = require("../../backend/services/rebirths")
-local ClickerService = require("../../backend/services/click")
-local DataService = require("../../backend/services/data")
+--// Services & Dependencies
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local RunService = game:GetService("RunService")
+local RebirthService = require(script.Parent.Parent.backend.services.rebirths)
+local ClickerService = require(script.Parent.Parent.backend.services.click)
+local DataService = require(script.Parent.Parent.backend.services.data)
+local Functions = require(ReplicatedStorage.Shared.Functions)
 
-local Functions = require(game:GetService("ReplicatedStorage").Shared.Functions)
+--// Module State
+local state = {
+    selectedRebirthIndex = 1,
+    isAutoRebirthing = false,
+    currentClicks = 0,
+    buttons = {},
+    nameToIndexMap = {}
+}
 
-local function get_normalized_rebirths()
-    local vkMap = {}
-    local stringButtons = {} 
-    local unlockedButtons = RebirthService.unlockedRebirthButtons(DataService.getData())
+--// Functions
+local function refreshRebirthOptions()
+    table.clear(state.buttons)
+    table.clear(state.nameToIndexMap)
     
-    for i, v in ipairs(unlockedButtons) do
-        vkMap[Functions.suffixes(v)] = i
-        stringButtons[i] = Functions.suffixes(v) 
+    local unlocked = RebirthService.unlockedRebirthButtons(DataService.getData())
+    for index, value in ipairs(unlocked) do
+        local formatted = Functions.suffixes(value)
+        state.buttons[index] = formatted
+        state.nameToIndexMap[formatted] = index
     end
+end
 
-    return stringButtons, vkMap
+local function getSelectedPrice()
+    local data = DataService.getData()
+    return RebirthService.calculateRebirthPrice(data, state.selectedRebirthIndex)
+end
+
+local function attemptRebirth()
+    if not state.isAutoRebirthing then return end
+    
+    local price = getSelectedPrice()
+    if state.currentClicks >= price then
+        RebirthService.rebirth(state.selectedRebirthIndex)
+    end
 end
 
 return function(Window)
-    local data = DataService.getData()
-    local selectedAutoRebirth = 1
-    local autoRebirthing = false
-    local clickCount = 0
-    local rebirthPrice = RebirthService.calculateRebirthPrice(data, selectedAutoRebirth)
-
-    local buttons, map = get_normalized_rebirths()
+    refreshRebirthOptions()
 
     local Tab = Window:Tab({
         Title = "Rebirth",
@@ -34,13 +53,9 @@ return function(Window)
     local RebirthsDropdown = Tab:Dropdown({
         Title = "Auto-Rebirth",
         Desc = "Select Auto-Rebirth Value",
-        Values = buttons,
-        Callback = function(option)
-            selectedAutoRebirth = map[option]
-            rebirthPrice = RebirthService.calculateRebirthPrice(data, selectedAutoRebirth)
-            
-            print(rebirthPrice) 
-            
+        Values = state.buttons,
+        Callback = function(selectedOption)
+            state.selectedRebirthIndex = state.nameToIndexMap[selectedOption] or 1
         end,
         Flag = "selectedAutoRebirth"
     })
@@ -48,32 +63,34 @@ return function(Window)
     Tab:Button({
         Title = "Refresh Buttons",
         Callback = function()
-            buttons, map = get_normalized_rebirths() 
-            RebirthsDropdown:Refresh(buttons)
+            refreshRebirthOptions()
+            RebirthsDropdown:Refresh(state.buttons)
         end
     })
 
     Tab:Toggle({
         Title = "Toggle Auto-Rebirth",
-        Callback = function()
-            autoRebirthing = true
+        Callback = function(enabled)
+            state.isAutoRebirthing = enabled
         end,
         Flag = "toggleAutoRebirth"
     })
-    
-    ClickerService.onClicksChange(function(old, new) 
-        clickCount = new
+
+    local connection = ClickerService.onClicksChange(function(_, newClicksValue) 
+        state.currentClicks = newClicksValue
+        attemptRebirth()
     end)
 
-    task.spawn(function()
+    local loop = task.spawn(function()
         while true do
-            if autoRebirthing then
-               if clickCount >= rebirthPrice then 
-                    RebirthService.rebirth(selectedAutoRebirth)
-                end
-            end
-            task.wait() -- little delay just in case
+            task.wait(0.5)
+            attemptRebirth()
         end
+    end)
+
+    Window:OnDestroy(function()
+        if connection then connection:Disconnect() end
+        if loop then task.cancel(loop) end
     end)
 
     return Tab

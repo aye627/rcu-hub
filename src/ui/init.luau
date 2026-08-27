@@ -8,6 +8,7 @@ local Window = WindUI:CreateWindow({
 Window._threads = {} -- safety to prevent memory leaks
 Window._connections = {} -- same purpose
 
+task.spawn(function() require("./tabs/clicker.luau")(Window) end)
 local Clicker = require("./tabs/clicker.luau")(Window)
 local Rebirths = require("./tabs/rebirths.luau")(Window)
 local Debug = require("./tabs/debug_stats.luau")(Window)

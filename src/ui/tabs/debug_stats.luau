@@ -67,13 +67,28 @@ return function(Window)
         Icon = "chart-column"
     })
 
+    Tab:Slider({
+        Title = "Update Frequency",
+        Desc = "In seconds",
+        Value = {
+            Min = 1,
+            Max = 60,
+            Default = Config.updateDelay
+        },
+        Step = 1,
+        Callback = function(value)
+            Config.updateDelay = value
+        end,
+        Flag = "debugUpdateDelay"
+    })
+
     for name, config in Paragraphs do
         local ref = Paragraphs[name]
-        ref.Desc = ref._handler(debugStats[name])
+        ref.Desc = ref._handler(Config.debugStats[name])
         handlers[name] = ref._handler
         paragraphs[name] = Tab:Paragraph(config)
     end
-
+    
     local loop = task.spawn(function()
         while true do
             update()

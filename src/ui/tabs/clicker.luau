@@ -19,13 +19,17 @@ return function(Window)
         end
     })
     
-    task.spawn(function()
+    local loop = task.spawn(function()
         while true do
             if fastAutoClicker then
                 ClickerService.click()
             end
             task.wait(1/60)
         end
+    end)
+
+    Window:OnDestroy(function()
+        if loop then task.cancel(loop)
     end)
 
     return Tab

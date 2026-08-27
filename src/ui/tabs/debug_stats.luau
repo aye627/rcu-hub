@@ -34,7 +34,7 @@ local Paragraphs = {
     }
 }
 local Config = {
-    debugStats = DebugService.getDebugStats()
+    debugStats = DebugService.getDebugStats(),
     updateDelay = 3
 }
 local handlers = {}

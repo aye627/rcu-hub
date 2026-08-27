@@ -4,7 +4,7 @@ local Service = {}
 local Players = game:GetService("Players")
 local Stats = game:GetService("Stats")
 local UserInputService = game:GetService("UserInputService")
-local UserGameSettings = game:GetService("UserGameSettings")
+--local UserGameSettings = game:GetService("UserGameSettings") unknown issue with actor
 local GuiService = game:GetService("GuiService")
 
 --// References
@@ -37,9 +37,9 @@ function Service.getDebugStats(): DebugStats
     return {
         device_category = getDeviceCategory(),
         platform = if success then platform else "Unknown",
-        fullscreen = UserGameSettings:InFullscreen(),
-        mouse_sensitivity = UserGameSettings.MouseSensitivity,
-        quality_level = UserGameSettings.SavedQualityLevel,
+        --fullscreen = UserGameSettings:InFullscreen(),
+        --mouse_sensitivity = UserGameSettings.MouseSensitivity,
+        --quality_level = UserGameSettings.SavedQualityLevel,
         memory_usage = Stats:GetTotalMemoryUsageMb()
     }
 end

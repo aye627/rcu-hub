@@ -40,7 +40,7 @@ function Service.getDebugStats(): DebugStats
         fullscreen = UserGameSettings:InFullscreen(),
         mouse_sensitivity = UserGameSettings.MouseSensitivity,
         quality_level = UserGameSettings.SavedQualityLevel,
-        memory_usage = Stats:GetTotalMemoryUsageMb
+        memory_usage = Stats:GetTotalMemoryUsageMb()
     }
 end
 

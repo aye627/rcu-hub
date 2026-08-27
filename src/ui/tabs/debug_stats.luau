@@ -35,7 +35,8 @@ local Paragraphs = {
 }
 local Config = {
     debugStats = DebugService.getDebugStats(),
-    updateDelay = 3
+    updateDelay = 3,
+    enabled = false
 }
 local handlers = {}
 
@@ -67,6 +68,14 @@ return function(Window)
         Icon = "chart-column"
     })
 
+    Tab:Toggle({
+        Title = "Enabled",
+        Value = Config.enabled,
+        Callback = function(value)
+            Config.enabled = value
+        end
+    })
+
     Tab:Slider({
         Title = "Update Frequency",
         Desc = "In seconds",
@@ -94,8 +103,10 @@ return function(Window)
     
     local loop = task.spawn(function()
         while true do
-            update()
-            task.wait(Config.updateDelay)
+            if Config.enabled then
+                update()
+                task.wait(Config.updateDelay)
+            end
         end
     end)
         

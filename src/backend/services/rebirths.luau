@@ -21,6 +21,7 @@ function Service.unlockedRebirthButtons(data): { number }
 
     for index, value in ipairs(Rebirths) do
         if max_rebirth.value >= index then unlocked[index] = value end
+        task.wait(1/90) 
     end
     
     return unlocked

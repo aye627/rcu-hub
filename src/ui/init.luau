@@ -9,10 +9,10 @@ Window._threads = {} -- safety to prevent memory leaks
 Window._connections = {} -- same purpose
 
 task.spawn(function() require("./tabs/transparent.luau")(Window) end)
-local Clicker = require("./tabs/clicker.luau")(Window)
-local Rebirths = require("./tabs/rebirths.luau")(Window)
-local Upgrades = require("./tabs/upgrades.luau")(Window)
-local Debug = require("./tabs/debug_stats.luau")(Window)
+require("./tabs/clicker.luau")(Window)
+require("./tabs/rebirths.luau")(Window)
+require("./tabs/upgrades.luau")(Window)
+require("./tabs/debug_stats.luau")(Window)
 
 Window:OnDestroy(function()
     for i, thread_obj in ipairs(Window._threads) do
@@ -25,10 +25,6 @@ Window:OnDestroy(function()
 
     table.clear(Window._threads)
     table.clear(Window._connections)
-    Clicker = nil
-    Rebirths = nil
-    Debug = nil
-    Upgrades = nil
     Window = nil
     WindUI = nil
 

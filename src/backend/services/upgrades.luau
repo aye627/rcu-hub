@@ -13,6 +13,11 @@ local UpgradeService = Knit.GetService("UpgradeService")
 local HiveService = Knit.GetService("HiveService")
 local DungeonService = Knit.GetService("DungeonService")
 
+Service.upgrades = Upgrades
+Service.fishingUpgrades = FishingUpgrades
+Service.dungeonUpgrades = DungeonUpgrades
+Service.hiveUpgrades = HiveUpgrades
+
 --// Functions
 function Service.buyUpgrade(id: string)
     return UpgradeService:upgrade(id)

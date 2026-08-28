@@ -7,6 +7,7 @@ local function upgradesToArray(upgrades)
     local counter = 1
     for name, _ in upgrades do
         result[counter] = name
+        counter = counter + 1
     end
     return result
 end

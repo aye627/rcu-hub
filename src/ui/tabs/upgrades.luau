@@ -29,8 +29,8 @@ local state = {
     autoUpgradeCategory = "Spawn"
 }
 
-return function(Section)
-    local Tab = Section:Tab({
+return function(Window)
+    local Tab = Window:Tab({
         Icon = "chevrons-up",
         Title = "Upgrades"
     })

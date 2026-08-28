@@ -5,7 +5,7 @@ local DataService = require("../../backend/services/data.luau")
 local function upgradesToArray(upgrades)
     local result = {}
     local counter = 1
-    for name, _ in ipairs(upgrades) do
+    for name, _ in upgrades do
         result[counter] = name
     end
     return result
@@ -52,7 +52,7 @@ return function(Window)
         Color = "Grey",
         Image = "map-pin",
         ImageSize = 30,
-        Thumbnail = "rbxassetid://77341192020088",
+        Thumbnail = "rbxassetid://108379018063166",
         ThumbnailSize = 80,
         Locked = false,
         Buttons = paragraphButtons

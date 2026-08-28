@@ -8,7 +8,7 @@ local DataService = require("../../backend/services/data.luau")
 local function upgradesToArray(upgrades)
     local result = {}
     local counter = 1
-    for name, _ in ipairs(#upgrades) do
+    for name, _ in ipairs(upgrades) do
         result[counter] = name
     end
     return result

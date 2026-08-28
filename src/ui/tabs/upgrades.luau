@@ -33,11 +33,12 @@ return function(Window)
 
     local paragraphButtons = {}
     local counter = 1
+    local paragraph
     for name, asset in backgroundMap do
         paragraphButtons[counter] = {
             Title = name,
             Callback = function()
-                Paragraph:SetThumbnail(asset)
+                paragraph:SetThumbnail(asset)
             end
         }
         counter = counter + 1
@@ -46,7 +47,7 @@ return function(Window)
     backgroundMap = nil
     counter = nil
 
-    local Paragraph = Tab:Paragraph({
+    paragraph = Tab:Paragraph({
         Title = "Upgrades Category",
         Color = "Grey",
         Image = "map-pin",

@@ -1,6 +1,3 @@
---!nolint LocalShadow
---!nolint SameLineStatement
-
 local UpgradeService = require("../../backend/services/upgrades.luau")
 local DataService = require("../../backend/services/data.luau")
 

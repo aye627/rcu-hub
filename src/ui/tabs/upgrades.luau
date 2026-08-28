@@ -90,5 +90,12 @@ return function(Window)
         end
     })
 
+    --[[loop = task.spawn(function()
+        while true do
+            
+        end
+        task.wait(1/15)
+    end)]]
+
     return Tab
 end

@@ -11,6 +11,7 @@ Window._connections = {} -- same purpose
 task.spawn(function() require("./tabs/transparent.luau")(Window) end)
 local Clicker = require("./tabs/clicker.luau")(Window)
 local Rebirths = require("./tabs/rebirths.luau")(Window)
+local Upgrades = require("./tabs/upgrades.luau")(Window)
 local Debug = require("./tabs/debug_stats.luau")(Window)
 
 Window:OnDestroy(function()
@@ -26,6 +27,8 @@ Window:OnDestroy(function()
     table.clear(Window._connections)
     Clicker = nil
     Rebirths = nil
+    Debug = nil
+    Upgrades = nil
     Window = nil
     WindUI = nil
 

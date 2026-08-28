@@ -22,7 +22,6 @@ local backgroundMap = {
     Fishing = "rbxassetid://86301195991861"
 }
 local state = {
-    data = DataService:getData(),
     autoUpgradeEnabled = false,
     autoUpgradeSort = "Expensive",
     autoUpgradeOrder = {},

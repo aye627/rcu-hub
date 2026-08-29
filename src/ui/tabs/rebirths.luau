@@ -21,7 +21,6 @@ end
 
 local function refreshRebirths()
     table.clear(state.buttons)
-    table.clear(state.nameToIndexMap)
     
     local unlocked = RebirthService.unlockedRebirthButtons(DataService.getData())
     for index, value in ipairs(unlocked) do
@@ -55,7 +54,7 @@ return function(Window)
     local RebirthParagraph = Tab:Paragraph({
         Title = "Selected Option",
         Desc = state.buttons[state.selectedRebirthIndex],
-        Image = "icon-restart",
+        Image = "list-restart",
         ImageSize = 20
     })
 

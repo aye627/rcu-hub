@@ -15,13 +15,17 @@ local state = {
 }
 
 --// Functions
+local function doubleToSuffixed(n: number): string
+    return Functions.suffixes(Functions.floatingPoint(n))
+end
+
 local function refreshRebirths()
     table.clear(state.buttons)
     table.clear(state.nameToIndexMap)
     
     local unlocked = RebirthService.unlockedRebirthButtons(DataService.getData())
     for index, value in ipairs(unlocked) do
-        local formatted = Functions.suffixes(value)
+        local formatted = doubleToSuffixed(value)
         state.buttons[index] = tostring(formatted)
     end
 end
@@ -47,17 +51,25 @@ return function(Window)
         Title = "Rebirth",
         Icon = "refresh-ccw"
     })
-    
-    Tab:Slider({
+
+    local RebirthParagraph = Tab:Paragraph({
+        Title = "Selected Option",
+        Desc = state.buttons[state.selectedRebirthIndex],
+        Image = "icon-restart",
+        ImageSize = 20
+    })
+
+    local RebirthSlider = Tab:Slider({
         Title = "Auto-Rebirth",
         Desc = "Select Auto-Rebirth Value",
         Value = {
             Min = 0,
-            Max = 75,
+            Max = #state.buttons - 1,
             Default = 0
         },
         Callback = function(value)
             state.selectedRebirthIndex = value
+            RebirthParagraph:SetDesc(state.buttons[value])
         end,
         Flag = "selectedAutoRebirth"
     })
@@ -73,6 +85,11 @@ return function(Window)
     local connection = ClickerService.onClicksChange(function(_, newClicksValue) 
         state.currentClicks = newClicksValue
         attemptRebirth()
+    end)
+
+    local upgradesConnection = DataService.replica:OnSet({ "upgrades" }, function()
+        refreshRebirths()
+        RebirthSlider:SetMax(#state.buttons)
     end)
 
     local loop = task.spawn(function()

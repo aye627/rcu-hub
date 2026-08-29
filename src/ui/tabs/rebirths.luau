@@ -11,12 +11,11 @@ local state = {
     selectedRebirthIndex = 1,
     isAutoRebirthing = false,
     currentClicks = 0,
-    buttons = {},
-    nameToIndexMap = {}
+    buttons = {}
 }
 
 --// Functions
-local function refreshRebirthOptions()
+local function refreshRebirths()
     table.clear(state.buttons)
     table.clear(state.nameToIndexMap)
     
@@ -24,7 +23,6 @@ local function refreshRebirthOptions()
     for index, value in ipairs(unlocked) do
         local formatted = Functions.suffixes(value)
         state.buttons[index] = tostring(formatted)
-        state.nameToIndexMap[tostring(formatted)] = index
     end
 end
 
@@ -43,29 +41,25 @@ local function attemptRebirth()
 end
 
 return function(Window)
-    refreshRebirthOptions()
+    refreshRebirths()
 
     local Tab = Window:Tab({
         Title = "Rebirth",
         Icon = "refresh-ccw"
     })
     
-    local RebirthsDropdown = Tab:Dropdown({
+    Tab:Slider({
         Title = "Auto-Rebirth",
         Desc = "Select Auto-Rebirth Value",
-        Values = state.buttons,
-        Callback = function(selectedOption)
-            state.selectedRebirthIndex = state.nameToIndexMap[selectedOption] or 1
+        Value = {
+            Min = 0,
+            Max = 75,
+            Default = 0
+        },
+        Callback = function(value)
+            state.selectedRebirthIndex = value
         end,
         Flag = "selectedAutoRebirth"
-    })
-
-    Tab:Button({
-        Title = "Refresh Buttons",
-        Callback = function()
-            refreshRebirthOptions()
-            RebirthsDropdown:Refresh(state.buttons)
-        end
     })
 
     Tab:Toggle({

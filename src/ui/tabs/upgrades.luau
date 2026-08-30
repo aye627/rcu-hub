@@ -41,10 +41,6 @@ for name, data in CategoriesData do
     CategoryToList[name] = data.List
     CategoryList[counter] = name
     UpgradesList[name] = {}
-    state.autoUpgradeSettings[name] = {
-        upgradeSort = UpgradesSort[1].Title,
-        upgradeOrder = 
-    } -- prepare
 
     for upgrade_name, _ in data.List do
         table.insert(UpgradesList[name], upgrade_name)
@@ -78,9 +74,11 @@ return function(Window)
         Callback = function(option)
             current_category = option
             local settings = state.autoUpgradeSettings[current_category]
-            UpgradesSortDropdown:Select(settings.upgradeSort)
+            UpgradesSortDropdown:Select(settings.upgradeSort or UpgradesSort[1].Title)
             UpgradesOrderDropdown:Refresh(UpgradesList[option])
-            UpgradesOrderDropdown:Select(settings.upgradeOrder)
+            if settings.upgradeOrder then
+                UpgradesOrderDropdown:Select(settings.upgradeOrder)
+            end
             Paragraph:SetTitle(option)
             Paragraph:SetThumbnail(CategoryToThumbnail[option])
         end

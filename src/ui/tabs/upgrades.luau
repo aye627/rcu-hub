@@ -41,6 +41,10 @@ for name, data in CategoriesData do
     CategoryToList[name] = data.List
     CategoryList[counter] = name
     UpgradesList[name] = {}
+    state.autoUpgradeSettings[name] = {
+        upgradeSort = UpgradesSort[1].Title,
+        upgradeOrder = 
+    } -- prepare
 
     for upgrade_name, _ in data.List do
         table.insert(UpgradesList[name], upgrade_name)
@@ -53,15 +57,17 @@ CategoriesData = nil
 --// Functions
 
 return function(Window)
+    local current_category = CategoryList[1]
+
     local Tab = Window:Tab({
         Title = "Upgrades",
         Icon = "chevrons-up",
     })
 
     local UpgradesSortDropdown, UpgradesOrderDropdown
-    Tab:Paragraph({
-        Title = CategoryList[1],
-        Thumbnail = CategoryToThumbnail[CategoryList[1]],
+    local Paragraph = Tab:Paragraph({
+        Title = current_category,
+        Thumbnail = CategoryToThumbnail[current_category],
         ThumbnailSize = 80
     })
 
@@ -70,25 +76,33 @@ return function(Window)
         Values = CategoryList,
         AllowNone = false,
         Callback = function(option)
-            local settings = state.autoUpgradeSettings
+            current_category = option
+            local settings = state.autoUpgradeSettings[current_category]
             UpgradesSortDropdown:Select(settings.upgradeSort)
             UpgradesOrderDropdown:Refresh(UpgradesList[option])
             UpgradesOrderDropdown:Select(settings.upgradeOrder)
+            Paragraph:SetTitle(option)
+            Paragraph:SetThumbnail(CategoryToThumbnail[option])
         end
     })
 
     UpgradesSortDropdown = Tab:Dropdown({
         Title = "Upgrades Sort",
-        Values = UpgradesSort
+        Values = UpgradesSort,
+        Callback = function(option)
+            state.autoUpgradeSettings[current_category].upgradeSort = option 
+        end
     })
 
     UpgradesOrderDropdown = Tab:Dropdown({
         Title = "Upgrades Buy Order",
-        Values = UpgradesList[CategoryList[1]],
+        Values = UpgradesList[current_category],
         AllowNone = false,
         Multi = true,
         Callback = function(options)
-            
+            state.autoUpgradeSettings[current_category].upgradeOrder = options
         end
     })
+
+    return Tab
 end

@@ -81,6 +81,7 @@ return function(Window)
             end
             Paragraph:SetTitle(option)
             Paragraph:SetThumbnail(CategoryToThumbnail[option])
+            warn(`[INFO] thumbnail={CategoryToThumbnail[option]}; option={option}; upgradeSort={settings.upgradeSort}`)
         end
     })
 
